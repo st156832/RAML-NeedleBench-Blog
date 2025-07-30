@@ -11,7 +11,13 @@ This is the front page of a website that is powered by the [Academic Pages templ
 
  You can fork [this template](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and Markdown files, add your own PDFs and other content, and have your own site for free, with no ads!
 
-<figure style="max-width: 50%; display: block; margin: auto; width: 50%;">
+<figure>
+    <img src="{{site.baseurl}}/images/llm_context_window_evolution.png"
+         alt="Albuquerque, New Mexico">
+    <figcaption style="text-align: center;">A single track trail outside of Albuquerque, New Mexico.</figcaption>
+</figure>
+
+<figure style="max-width: 80%; display: block; margin: auto; width: 80%;">
     <img src="{{site.baseurl}}/images/llm_context_window_evolution.png"
          alt="Albuquerque, New Mexico">
     <figcaption style="text-align: center;">A single track trail outside of Albuquerque, New Mexico.</figcaption>
