@@ -14,7 +14,7 @@ This is the front page of a website that is powered by the [Academic Pages templ
 <figure>
     <img src="{{site.baseurl}}/images/llm_context_window_evolution.png"
          alt="Albuquerque, New Mexico">
-    <figcaption style="text-align: center;">A single track trail outside of Albuquerque, New Mexico.</figcaption>
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">A single track trail outside of Albuquerque, New Mexico.</figcaption>
 </figure>
 
 <figure style="max-width: 80%; display: block; margin: auto; width: 80%;">
