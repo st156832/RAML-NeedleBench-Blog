@@ -13,8 +13,8 @@ title                    : "RAML Blog"
 title_separator          : "-"
 name                     : &name ""
 description              : &description ""
-url                      : https://st156832.github.io/RAML-NeedleBench-Blog/ # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io" or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
-baseurl                  : "" # the subpath of your site, e.g. "/blog"
+url                      : https://st156832.github.io/RAML-NeedleBench-Blog # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io" or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
+baseurl                  : "/" # the subpath of your site, e.g. "/blog"
 repository               : "https://github.com/st156832/RAML-NeedleBench-Blog"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
