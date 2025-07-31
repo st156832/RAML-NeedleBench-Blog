@@ -111,14 +111,41 @@ Like in Kamradt, RULER uses synthetic data to construct and scale their haystack
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 4: Long Context performers of models in RULER</figcaption>
 </figure>
 
+***NOTE**: Effective length refers to the reference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
+
 **Main Findings**:
 - As in Kamradt, passkey retrival and base NIAH achieve near perfect results for most models.
 - Model performance in advanced tasks drops at higher context lenghts
 - Models effective context lengths are noticably shorter then their claimed maximum. 
 
-***NOTE**: Effective length refers to the reference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
-
 **Limitations**:
 - **Lacking correlation to realistic long-context tasks**: Distractor text as well as keywords such as needles for NIAH or targets for FWE / CWE are synthetic ("aaaa", "cccc"), limiting their corellation to real world natural language tasks.
 - **Lack of evaluation on short context**: Models were not evaluated at short contexts below 4k tokens. RULER is purely focused on the drop off in performance at higher context lengths.
-- **Lack of verification of prompt robustness**: As seen with the original NIAH test on Claude-2.1 prompt robustness can significantly impact performance. RULER did not verify prompt robustness beyond preliminary, early stage testing. 
+- **Lack of verification of prompt robustness**: As seen with the original NIAH test on Claude-2.1 prompt robustness can significantly impact performance. RULER did not verify prompt robustness beyond preliminary, early stage testing.
+
+## LongBench
+Comparaded to RULER,  Bai et al.'s LongBench takes a different approach. The LongBench Framework utilizes human annotated, real world text's from both english and chinese alongside synthetic sources. It boast a robust and diverse number of evaluation tasks ranging from QA, summarization and few-shot-learning to code completion.
+
+<figure>
+    <img src="{{site.baseurl}}/images/LongBench_sources.png"
+         alt="Breakdown of text used in LongBench by source.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 5: Breakdown of text sources used in LongBench.</figcaption>
+</figure>
+
+An interesting quirk identified by the authors was the models tendency to perform supprisingly well on QA tasks, even when not provided with any context. They attribute this to a likely overlap of test-data, partially sourced from wikipedia, and the models parameterized knowledge, highlighting a potencial dissadvantage of real world text in testing.   
+
+<figure>
+    <img src="{{site.baseurl}}/images/LongBench_memory.png"
+         alt="Context understanding vs memorization.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 6: Assessing context understanding vs memorization.</figcaption>
+</figure>
+
+**Main Findings**:
+- Open-source models still lag behind closed-source in longer context tasks.
+- Parametrizes knowledge can play a significant role in performance.
+- Real world data appears less discerning then sythethic tests, which tend toward high or very low scores, making averaged scores across various tasks less reliable.
+
+**Limitations**:
+- **Instruction-following ability of models influences test results**: Due to the variety of tasks evaluated in LongBench, a models ability to adapt to different tasks as well as the particularities of individual prompts can bias test results.
+- **Real world adjacency can lead to memorization**: Usage of non-synthetic texts enables models to utilize parameterized knowledge to solve certain tasks, even without context.
+- **Synthetic tests are more flexible**: Scalability of real text tasks is limited by the availability of appropriate data, and is harder to scale to very large context sizes. 
