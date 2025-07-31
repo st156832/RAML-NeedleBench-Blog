@@ -16,7 +16,7 @@ redirect_from:
 
 *This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. It covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
 
-Motivation - Evolution of ultra long context models
+Motivation - Evolution of ultra-long context models
 ======
 The release of Llamma 4 Scout this April marked yet another milestone in the rapid expansion of transformer LLM's capability to support larger and larger context sizes. The model claims an impressive 10M+ token context window, overshadowing even Googles Gemini series that made waves back in 2024 with the first model to break the 1M+ token boundary. Compare this to GPT1's rather modest context limit of a mere 520 tokens and the trend over the last half a decade becomes pretty clear.
 
