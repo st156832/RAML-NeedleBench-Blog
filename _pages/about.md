@@ -73,7 +73,7 @@ As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achie
 
 ***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
 
-Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/1727018183608193393) showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
+Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/1727018183608193393) showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall results were much spottier.
 
 <figure>
     <img src="{{site.baseurl}}/images/Claude_2_1_testing.png"
