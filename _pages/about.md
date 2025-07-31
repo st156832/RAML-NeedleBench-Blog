@@ -15,7 +15,7 @@ redirect_from:
 
 *This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. it covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
 
-Background - Evolution of ultra long context models
+Motivation - Evolution of ultra long context models
 ======
 The release of Llamma 4 Scout this April marked yet another milestone in the rapid expansion of transformer LLM's capability to support larger and larger context sizes. The model claims an impressive 10M+ token context window, overshadowing even Googles Gemini series that made waves back in 2024 with the first model to break the 1M+ token boundary. Compare this to GPT1's rather modest context limit of a mere 520 tokens and the trend over the last half a decade becomes pretty clear.
 
@@ -52,11 +52,9 @@ So why are leading LLM developers chasing these ultra large context models? Toke
 - **Performance**:
    Finally, the issue of performance. While many models claim large theoretical context windows of 128k+ tokens, the question remains, whether their performance stays consistent when actually utilizing that space. The last couple of years have seen the development of various benchmarking tools and frameworks to assess whether or not these models can keep up when confronted with large context scenarios. Generally, a models acceptable performance cutoff seems to fall significantly short of its claimed maximal context size. 
 
-With the general overview out of the way, lets now dive deeper into the performance assessment. This article covers three long context evaluation benchmarks, as well as one of the original long context evaluations tests, the widely known Needle in a Haystack test. 
-
 Related Work - A needle in the Haystack
 ======
- The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023, specifically to evaluate model performance at large context sizes. Kamradt published his methodology and findings from performing the test on OpenAIs ChatGPT-4 and Claude-2.1 on [Twitter](https://x.com/gregkamradt/status/1722386725635580292) and [GitHub](https://github.com/gkamradt/LLMTest_NeedleInAHaystack). Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including [NeedleBench](https://arxiv.org/abs/2407.11963), [Longbench](https://arxiv.org/abs/2308.14508) and [RULER](https://arxiv.org/abs/2404.06654). Before we take a closer look at these benchmarks, lets briefly cover the original NIHA.
+ The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023 to evaluate model performance at large context sizes. Kamradt published his methodology and findings, performing the test on OpenAIs ChatGPT-4 and Claude-2.1, on [Twitter](https://x.com/gregkamradt/status/1722386725635580292) and [GitHub](https://github.com/gkamradt/LLMTest_NeedleInAHaystack). Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including [NeedleBench](https://arxiv.org/abs/2407.11963), [Longbench](https://arxiv.org/abs/2308.14508) and [RULER](https://arxiv.org/abs/2404.06654). Before we take a closer look at these benchmarks, lets briefly cover the original NIHA.
 
 **How the NIAH test works**:
 1. Construct the haystack, a distractor text that will make up the majority of the prompt. Kamradt used snippets of the collection of [Paul Graham essays](https://www.paulgraham.com/articles.html) to construct the stack for the original NIAH.
@@ -73,6 +71,8 @@ Related Work - A needle in the Haystack
 
 As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achieving flawless results for context sizes below 73k. Needles inserted at the beginnign and end of the document were also always retrieved correctly, even at the maximum of 128K tokens. Notably, there is a significant performance loss observed for needles inserted between 10-50% document depth. This was dubbed the ["lost in the middle" phenomenon](https://arxiv.org/pdf/2307.03172).
 
+***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
+
 Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/1727018183608193393) showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
 
 <figure>
@@ -82,8 +82,6 @@ Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/17270181836081933
 </figure>
 
 These results were later [challenged by Anthropic](https://www.anthropic.com/news/claude-2-1-prompting), claiming that the models comparatively poor performance was due to non-ideal prompting and the models tendency to "not [answer] a question based on a document if it doesn’t contain enough information to justify that answer". Anthropics revised testing boosted the NIAH performance from 27% to 98% accuracy, indicating that both model architecture as well as prompt construction can have a significant impact on NIAH performance. A hypothesis that would later be re-affirmed in other bench marking results building on the original NIAH.
-
-***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
 
 Related Work - Long Context Benchmarking
 ======
@@ -148,4 +146,30 @@ An interesting quirk identified by the authors was the models tendency to perfor
 **Limitations**:
 - **Instruction-following ability of models influences test results**: Due to the variety of tasks evaluated in LongBench, a models ability to adapt to different tasks as well as the particularities of individual prompts can bias test results.
 - **Real world adjacency can lead to memorization**: Usage of non-synthetic texts enables models to utilize parameterized knowledge to solve certain tasks, even without context.
-- **Synthetic tests are more flexible**: Scalability of real text tasks is limited by the availability of appropriate data, and is harder to scale to very large context sizes. 
+- **Synthetic tests are more flexible**: Scalability of real text tasks is limited by the availability of appropriate data, and is harder to scale to very large context sizes.
+
+
+NeedleBench
+======
+
+## Information Sparse Tasks
+
+<figure>
+    <img src="{{site.baseurl}}/images/NB_sparse.png"
+         alt="Visualization of information sparse tasks in NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 7: Visualization of information sparse tasks in NeedleBench.</figcaption>
+</figure>
+
+Information sparse tasks are categorized by relevant details, the needles, being embedded in irrelevant filler content, the haystack, They follow the basic NIAH formula, but include variations on the vanilla test. As in Kamradt, Needlebench uses Paul Graham essays to construct their haystack. Information sparse tasks are divided into three categories:
+
+- **Single-Needle Retrieval Tasks (S-RT)**: The original NIAH task. A single, synthetic, fictional needle is embedded and the model is tasked with retrieving it.
+- **Multi-Needle Retrieval Task (M-RT)**: Expands the S-RT by inserting multiple needles at various positions in the haystack. The model is tasked with retrieving all needles.
+- **Multi-Needle Reasoning Task (M-RS)**: Expands on the M-RT by requiring reasoning across multiple needles. Each needle represents a data point required to answer the prompt. In NeedleBench these tasks are based on various ancestral relationship queries, i.e. "Who is the eldest relative that 'Carolyn Hicks' can trace back to in the context?"
+   
+### Evaluation of information Sparse Tasks
+
+<figure>
+    <img src="{{site.baseurl}}/images/NB_sparse_eval.png"
+         alt="Information sparse tasks evaluation NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 7: Information sparse tasks evaluation in NeedleBench.</figcaption>
+</figure>
