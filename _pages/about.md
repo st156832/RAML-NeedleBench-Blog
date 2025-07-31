@@ -53,10 +53,11 @@ So why are leading LLM developers chasing these ultra large context models? Toke
 
 With the general overview out of the way, lets now dive deeper into the performance assessment. This article covers three long context evaluation benchmarks, as well as one of the original long context evaluations tests, the widely known Needle in a Haystack test. 
 
-A needle in Haystack
+A needle in the Haystack
 ======
- The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023. Kamradt published his methodology and findings from performing the test on OpenAIs ChatGPT-4 and Claude-2.1 on Twitter and GitHub. Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including NeedleBench, Longbench and RULER. Before jumping into these benchmarks, lets take a brief look on how it works.
+ The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023. Kamradt published his methodology and findings from performing the test on OpenAIs ChatGPT-4 and Claude-2.1 on Twitter and GitHub. Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including NeedleBench, Longbench and RULER. Before we take a closer look at these benchmarks, lets briefly cover the original NIHA.
 
+**How the NIAH test works**:
 1. Construct the haystack, a distractor text that will make up the majority of the prompt. Kamradt used snippets of the collection of Paul Graham essays to construct the stack for the original NIAH.
 2. Insert a needle, an out of place fact or statement into the haystack. in his testing, Kamradt used the statement "The best thing to do in San Francisco is eat a sandwich and sit in Dolores Park on a sunny day".
 3. Formulate a prompt containing the haystack with the inserted needle and task the model with answering a question who's answer is contained within the needle. In this case "What the best thing to do in San Francisco?"
@@ -71,7 +72,7 @@ A needle in Haystack
 
 As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achieving flawless results for context sizes below 73k. Needles inserted at the beginnign and end of the document were also always retrieved correctly, even at the maximum of 128K tokens. Notably, there is a significant performance loss observed for needles inserted between 10-50% document depth. This was dubbed the ["lost in the middle" phenomenon](https://arxiv.org/pdf/2307.03172).
 
-Kamradts test on Claud-2.1 showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
+Kamradt's test on Claud-2.1 showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
 
 <figure>
     <img src="{{site.baseurl}}/images/Claude_2_1_testing.png"
@@ -80,3 +81,5 @@ Kamradts test on Claud-2.1 showed a similar pattern, with performance taking a s
 </figure>
 
 These results were later [challenged by Anthropic](https://www.anthropic.com/news/claude-2-1-prompting), claiming that the models comparatively poor performance was due to non-ideal prompting and the models tendency to "not [answer] a question based on a document if it doesn’t contain enough information to justify that answer". Anthropics revised testing boosted the NIAH performance from 27% to 98% accuracy, indicating that both model architecture as well as prompt construction can have a significant impact on NIAH performance. A hypothesis that would later be re-affirmed in other bench marking results building on the original NIAH.
+
+***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
