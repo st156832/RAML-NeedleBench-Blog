@@ -15,10 +15,8 @@ redirect_from:
 
 *This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. it covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
 
-Some Background
+Background - Evolution of ultra long context models
 ======
-
-## Development of large context models:
 The release of Llamma 4 Scout this April marked yet another milestone in the rapid expansion of transformer LLM's capability to support larger and larger context sizes. The model claims an impressive 10M+ token context window, overshadowing even Googles Gemini series that made waves back in 2024 with the first model to break the 1M+ token boundary. Compare this to GPT1's rather modest context limit of a mere 520 tokens and the trend over the last half a decade becomes pretty clear.
 
 <figure>
@@ -56,9 +54,9 @@ So why are leading LLM developers chasing these ultra large context models? Toke
 
 With the general overview out of the way, lets now dive deeper into the performance assessment. This article covers three long context evaluation benchmarks, as well as one of the original long context evaluations tests, the widely known Needle in a Haystack test. 
 
-A needle in the Haystack
+Related Work - A needle in the Haystack
 ======
- The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023. Kamradt published his methodology and findings from performing the test on OpenAIs ChatGPT-4 and Claude-2.1 on [Twitter](https://x.com/gregkamradt/status/1722386725635580292) and [GitHub](https://github.com/gkamradt/LLMTest_NeedleInAHaystack). Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including [NeedleBench](https://arxiv.org/abs/2407.11963), [Longbench](https://arxiv.org/abs/2308.14508) and [RULER](https://arxiv.org/abs/2404.06654). Before we take a closer look at these benchmarks, lets briefly cover the original NIHA.
+ The Needle in a Haystack test, or NIAH was developed by Greg Kamradt in 2023, specifically to evaluate model performance at large context sizes. Kamradt published his methodology and findings from performing the test on OpenAIs ChatGPT-4 and Claude-2.1 on [Twitter](https://x.com/gregkamradt/status/1722386725635580292) and [GitHub](https://github.com/gkamradt/LLMTest_NeedleInAHaystack). Since then, NIAH has has been incorporated and build upon by various authors and researchers and it made its way into a large number of long context bench marking frameworks, including [NeedleBench](https://arxiv.org/abs/2407.11963), [Longbench](https://arxiv.org/abs/2308.14508) and [RULER](https://arxiv.org/abs/2404.06654). Before we take a closer look at these benchmarks, lets briefly cover the original NIHA.
 
 **How the NIAH test works**:
 1. Construct the haystack, a distractor text that will make up the majority of the prompt. Kamradt used snippets of the collection of [Paul Graham essays](https://www.paulgraham.com/articles.html) to construct the stack for the original NIAH.
@@ -87,24 +85,25 @@ These results were later [challenged by Anthropic](https://www.anthropic.com/new
 
 ***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
 
-Long Context Benchmarking
+Related Work - Long Context Benchmarking
 ======
+Following the publication of NIAH, several long-context benchmarking frameworks, including NeedleBench, have implemented variations of the original NIAH test into their suit of evaluation tasks. NeedleBench in turn, seeks to address some of the shortcomings identified in these related benchmarks. We will Therefore briefly cover two of these, RULER and LongBench, as they are emblematic of two different approaches to long-context benchmarking, identified in the paper.  
 
 ## RULER
-Published by Hsieh et al. in 2024, the synthetic RULER benchmark builds on the original NIAH, incorporating variation on the base test, RULER further tests on variable tracking (VT), common word extraction (CWE), frequent word extraction (FWE) and question answering (QA). 
+Published by Hsieh et al. in 2024, the english language synthetic RULER benchmark builds on the original NIAH, incorporating variation on the base test, RULER further tests on variable tracking (VT), common word extraction (CWE), frequent word extraction (FWE) and question answering (QA). 
 
 **NIAH Tasks in the RULER Benchmark**:
--  **Single NIAH(S-NIAH)**: This is the vanilla NIAH test where a single “needle”2 needs
-    to be retrieved from the “haystack”.
-- **Multi-keys NIAH (MK-NIAH)**: Multiple “needles” are inserted into the “haystack”, and
- only one of them needs to be retrieved. The additional “needles” are hard distractors. The
- most challenging setting is a version where the “haystack” is filled with distractor needles.
-- **Multi-values NIAH (MV-NIAH)**: Multiple “needles” sharing the same key are inserted
- into the “haystack”. All values associated with the same key need to be retrieved.
-- **Multi-queries NIAH (MQ-NIAH)**: Multiple “needles” are inserted into the “haystack”.
- All “needles” with distinct keys need to be retrieved.
+-  **Single NIAH(S-NIAH)**: This is the original NIAH test where a single needle needs
+    to be retrieved from the haystack.
+- **Multi-keys NIAH (MK-NIAH)**: Multiple needles are inserted into the haystack, and
+ only one of them needs to be retrieved. The additional needles are hard distractors. The
+ most challenging setting is a version where the haystack is filled with distractor needles.
+- **Multi-values NIAH (MV-NIAH)**: Multiple needles sharing the same key are inserted
+ into the haystack. All values associated with the same key need to be retrieved.
+- **Multi-queries NIAH (MQ-NIAH)**: Multiple needles are inserted into the haystack.
+ All needles with distinct keys need to be retrieved.
 
-Like Kamradt, RULER uses synthetic data to construct and scale their haystack. They tested 17 models, 2 closed source and 15 open source, with context lengths ranging between 3-128k tokens.  
+Like in Kamradt, RULER uses synthetic data to construct and scale their haystack. They tested 17 models, 2 closed source and 15 open source, with context lengths ranging between 3-128k tokens.  
 
 <figure>
     <img src="{{site.baseurl}}/images/RULER.png"
@@ -117,9 +116,9 @@ Like Kamradt, RULER uses synthetic data to construct and scale their haystack. T
 - Model performance in advanced tasks drops at higher context lenghts
 - Models effective context lengths are noticably shorter then their claimed maximum. 
 
-***NOTE**: Effective length refers to the refference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
+***NOTE**: Effective length refers to the reference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
 
 **Limitations**:
-- **Lacking correlation to realistic long-context tasks**: Distractor text as well as keywords such as needles for NIAH or targets for FWE / CWE are synthetic, limiting their corellation to real world natural language tasks.
+- **Lacking correlation to realistic long-context tasks**: Distractor text as well as keywords such as needles for NIAH or targets for FWE / CWE are synthetic ("aaaa", "cccc"), limiting their corellation to real world natural language tasks.
 - **Lack of evaluation on short context**: Models were not evaluated at short contexts below 4k tokens. RULER is purely focused on the drop off in performance at higher context lengths.
-- **Lack of verification of prompt robustness**: As seen with the original NIAH test on Claude-2.1 prompt robustness can significantly impact performance. RULER did verify prompt robustness beyond preliminary, early stage testing. 
+- **Lack of verification of prompt robustness**: As seen with the original NIAH test on Claude-2.1 prompt robustness can significantly impact performance. RULER did not verify prompt robustness beyond preliminary, early stage testing. 
