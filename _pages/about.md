@@ -8,15 +8,38 @@ redirect_from:
   - /about.html
 ---
 
-This is the front page of a website that is powered by the [Academic Pages template](https://github.com/academicpages/academicpages.github.io) and hosted on GitHub pages. [GitHub pages](https://pages.github.com) is a free service in which websites are built and hosted from code and data stored in a GitHub repository, automatically updating when a new commit is made to the repository. This template was forked from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/) created by Michael Rose, and then extended to support the kinds of content that academics have: publications, talks, teaching, a portfolio, blog posts, and a dynamically-generated CV. Incidentally, these same features make it a great template for anyone that needs to show off a professional template!
+*This article was written in the context of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. In it, I will be going over the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and shed some light on one of the original large context evaluation methods, the now legendary Needle in a Haystack' test.*
 
- You can fork [this template](https://github.com/academicpages/academicpages.github.io) right now, modify the configuration and Markdown files, add your own PDFs and other content, and have your own site for free, with no ads!
+Background:
+The release of Llamma 4 Scout this April marked yet another milestone in the rapid expansion of transformer LLM's capability to support larger and larger context sizes. The model claims an impressive 10M+ token context window, overshadowing even Googles Gemini series that made waves back in 2024 with the first model to break the 1M+ token boundary. Compare this to GPT1's rather modest context limit of a mere 520 tokens and the trend over the last half a decade becomes pretty clear.
 
 <figure>
     <img src="{{site.baseurl}}/images/llm_context_window_evolution.png"
          alt="Albuquerque, New Mexico">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">A single track trail outside of Albuquerque, New Mexico.</figcaption>
 </figure>
+
+So why are leading LLM developers chasing these ultra large context models? Token limits on a models attention act as one of the key performance indicator relevant for many task modern LLMs are geared towards. A models prompt, system prompt, conversation history, output and any additional documents relevant for a given task all have to fit into a models context window. A large context window comes with significant advantages, but also presents several challenges for both development and deployment of the model.
+
+Advantages of large context models: 
+
+Code completion: Coding assistant's like GitHub copilot benefit significantly from the ability to ingest large chunks of an existing codebase to better fit a generated code segment to the project it is deployed in. Small context sizes limit a model to the generation of individual functions that then have to manually be patched in, while sufficiently large context sizes would allow for the generation of entire modules or more interconnected class structures.
+
+Chain of thought: Models explaining their reasoning process can significantly increase the outputs token consumption. Models such as Googles o3 go into significant detail when explaining their approach to problem solving. More complex task may include code segments, scraped text or math equations used to come to a particular conclusion. As such it is not only important to fit these elements, but also to maintain a high degree of accuracy in long context scenarios to achieve a result that's both accurate and easy to follow. 
+
+RAG and CAG: Many modern inferencing pipelines include retrieval augmented generation (RAG) to preselect chunks of relevant tokens from a knowledge base to include as context to a given prompt. RAG allows for the efficient usage of limited context space by only including the most relevant information pertaining to a given query, however, the inclusion of a separate rag pipeline produces additional overhead. In contrast, models with very large context windows allow not only for much broader inclusion of documents, but enable the usage of cache augmented generation (CAG). With CAG, the entire knowledge base could be cashed and injected into each prompt, ensuring the model always has all relevant information at its disposal. As with the previous use cases, effective use of CAG requires the model to be able to effectively query and retrieve information across a much larger token space.
+
+Chat Applications: With the ubiquity of LLM chat models, it is also worth mentioning, that a models ability to track past exchanges is likewise dependent on the size of its context window. A model can only recall information that still fits within its context limit and may otherwise hallucinate or outright 'forget' about older parts of the conversation.
+
+Disadvantages of large context models
+ 
+Computational costs: Transformer models, which make up the vast majority of modern LLM's incur significant performance cost when scaling up context lengths. Computational costs generally scale quadratically, meaning a model with a context size of 4094 tokens requires roughly sixteen times the computational resources of a similar models with a context size of only 1024 tokens. This effect becomes increasingly significant when talking about models with context windows of several million tokens. Computational costs are one of the main factors to consider when deciding if a ultra large context model is fit for a given task, especially in resource constraint environments.
+
+Safety Concerns: While the primary focus often lays on ever increasing performance, researchers have warned about potential safety concerns when operating ultra large context models. Over fifty percent of responses from LLMs tested in the LongSafetyBench framework contained elements the researchers deemed unsafe. Furthermore, models seem to struggle with identifying harmful content within their provided context when the total context size increases. As a result, the point towards the fact, that a models safety behavior can vary significantly between small and large context scenarios. 
+
+Performance: Finally, the issue of performance. While many models claim large theoretical context windows of 128k+ tokens, the question remains, whether their performance stays consistent when actually utilizing that space. The last couple of years have seen the development of various benchmarking tools and frameworks to assess whether or not these models can keep up when confronted with large context scenarios. Generally, a models acceptable performance cutoff seems to fall significantly short of its claimed maximal context size. 
+
+With the general overview out of the way, lets now dive deeper into the performance assessment. This article covers three long context evaluation benchmarks, as well as one of the original long context evaluations tests, the widely known Needle in a Haystack test. 
 
 A data-driven personal website
 ======
