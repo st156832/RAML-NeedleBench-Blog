@@ -64,7 +64,7 @@ A needle in Haystack
 5. Evaluate the models answers on accuracy for each configuration. 
 
 <figure>
-    <img src="{{site.baseurl}}/images/NIAH_results.png"
+    <img src="{{site.baseurl}}/images/NIAH_results.jpg"
          alt="Results of the initial NIAH test on ChatGPT-4">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 2: Results of the initial NIAH test on ChatGPT-4.</figcaption>
 </figure>
@@ -74,7 +74,7 @@ As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achie
 Kamradts test on Claud-2.1 showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
 
 <figure>
-    <img src="{{site.baseurl}}/images/NIAH_results.png"
+    <img src="{{site.baseurl}}/images/Claude_2_1_testing.png"
          alt="Results of the initial NIAH test on Claud-2.1">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 3: Results of the initial NIAH test on Claud-2.1.</figcaption>
 </figure>
