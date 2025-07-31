@@ -151,6 +151,7 @@ An interesting quirk identified by the authors was the models tendency to perfor
 
 NeedleBench
 ======
+Building on both the original NIAH test as well as previous benchmarks such as RULER and LongBench, Mo Li et al. present NeedleBench as a purely synthetic alternative that aims to provide a comprehensive framework designed to assess retrieval and reasoning performance in bilingual, English / Chinese, long-context task at various context lenghts. Needlebench has a heavy focus on assessing reasoning ability and splits its evaluation tasks into two categories, **information sparse** and **information dense** tasks. 
 
 ## Information Sparse Tasks
 
@@ -160,16 +161,49 @@ NeedleBench
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 7: Visualization of information sparse tasks in NeedleBench.</figcaption>
 </figure>
 
-Information sparse tasks are categorized by relevant details, the needles, being embedded in irrelevant filler content, the haystack, They follow the basic NIAH formula, but include variations on the vanilla test. As in Kamradt, Needlebench uses Paul Graham essays to construct their haystack. Information sparse tasks are divided into three categories:
+Information sparse tasks are categorized by relevant details, the needles, being embedded in irrelevant filler content, the haystack, They follow the basic NIAH formula, but include variations on the vanilla test. As in Kamradt, Needlebench uses Paul Graham essays to construct their haystack. 
+
+**Information sparse tasks are divided into three categories**:
 
 - **Single-Needle Retrieval Tasks (S-RT)**: The original NIAH task. A single, synthetic, fictional needle is embedded and the model is tasked with retrieving it.
 - **Multi-Needle Retrieval Task (M-RT)**: Expands the S-RT by inserting multiple needles at various positions in the haystack. The model is tasked with retrieving all needles.
-- **Multi-Needle Reasoning Task (M-RS)**: Expands on the M-RT by requiring reasoning across multiple needles. Each needle represents a data point required to answer the prompt. In NeedleBench these tasks are based on various ancestral relationship queries, i.e. "Who is the eldest relative that 'Carolyn Hicks' can trace back to in the context?"
+- **Multi-Needle Reasoning Task (M-RS)**: Expands on the M-RT by requiring reasoning across multiple needles. Each needle represents a data point required to answer the prompt. In NeedleBench these tasks are based on various ancestral relationship queries, i.e. "Who is the eldest relative that 'Carolyn Hicks' can trace back to in the context?" with each needle representing a familial relationship.
    
 ### Evaluation of information Sparse Tasks
+
+Each tasks is evaluated on a exact match metric, where full points are awarded, if each required keyword is included in the provided answer. Individual Scores are then averaged across all varitions of content lenghts (C), needle positions (D) and task repetitions (R) with R = 10 for each configuration. The overall score for a model is calcualted by averaging the task score across all three task categories.
 
 <figure>
     <img src="{{site.baseurl}}/images/NB_sparse_eval.png"
          alt="Information sparse tasks evaluation NeedleBench.">
-    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 7: Information sparse tasks evaluation in NeedleBench.</figcaption>
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 8: Information sparse tasks evaluation in NeedleBench.</figcaption>
 </figure>
+
+## Information Dense Tasks
+While information sparse tasks bear a fairly close resemblence to the original NIAH test, information dense tasks ditch the established concept of the haystack completely in an effort to eliminate the need for irrelavant filler content. The so called ancestral trace challenge (ATC) is similar to the M-RS task, but instead of embedding multiple relational needles into a haystack, the context only consists of needles. Every sentence in the input context contains
+critical information directly related to the target question. Models need to keep perfect recall of all needles to arrive at the correct answer. 
+
+>Example ATC Prompt with 3 needles:
+>
+> Here is a test for multi-step reasoning ability called the Ancestral Trace Challenge. In this test,
+ we will simulate different people’s familial relationships, and your task is to continuously reason
+ through them until you identify the eldest ancestor.
+ Now, the scrambled family relationships are provided below:
+>
+>Wyatt James is the child of Maria Watson. Emily Barry, as Maria Watson’s paternal grandfather,
+ has a significant impact on Maria Watson’s upbringing. Joseph Taylor is not only Emily Barry’s
+ maternal grandfather but also Emily Barry’s role model.
+> 
+>Given the scrambled family relationships described above, who is the eldest relative that ’Wyatt
+ James’ can trace back to in the context?
+
+**Diversity in ATC tasks**:
+
+- **Relationship diversity**: Tasks feature a wide variety of relationship types, including but not
+ limited to parent-child, ancestor-descendant (across multiple generations), and dual-role relationships (i.e., one individual may simultaneously be a parent and a lifelong mentor).
+- **Task Diversity**: ATC challenges include four different task categories:
+  - Identifying the eldest ancestor
+  - Tracing the n-th ancestor of a given individual
+  - Tracing the n-th descendant of a given individual
+  - Calculating the relationship distance between two individuals
+- **Language diversity**: All ATC tasks are performed in English and Chinese
