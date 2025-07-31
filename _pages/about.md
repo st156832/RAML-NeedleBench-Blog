@@ -104,10 +104,22 @@ Published by Hsieh et al. in 2024, the synthetic RULER benchmark builds on the o
 - **Multi-queries NIAH (MQ-NIAH)**: Multiple “needles” are inserted into the “haystack”.
  All “needles” with distinct keys need to be retrieved.
 
-Like Kamradt, RULER uses synthetic data to construct and scale their haystack. They tested 17 models, 2 closed source and 15 open source, with context lenghts ranging between 3-128k tokens.  
+Like Kamradt, RULER uses synthetic data to construct and scale their haystack. They tested 17 models, 2 closed source and 15 open source, with context lengths ranging between 3-128k tokens.  
 
 <figure>
     <img src="{{site.baseurl}}/images/RULER.png"
          alt="RULER experimental results">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 4: Long Context performers of models in RULER</figcaption>
 </figure>
+
+**Main Findings**:
+- As in Kamradt, passkey retrival and base NIAH achieve near perfect results for most models.
+- Model performance in advanced tasks drops at higher context lenghts
+- Models effective context lengths are noticably shorter then their claimed maximum. 
+
+***NOTE**: Effective length refers to the refference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
+
+**Limitations**:
+- **Lacking correlation to realistic long-context tasks**: Distractor text as well as keywords such as needles for NIAH or targets for FWE / CWE are synthetic, limiting their corellation to real world natural language tasks.
+- **Lack of evaluation on short context**: Models were not evaluated at short contexts below 4k tokens. RULER is purely focused on the drop off in performance at higher context lengths.
+- **Lack of verification of prompt robustness**: As seen with the original NIAH test on Claude-2.1 prompt robustness can significantly impact performance. RULER did verify prompt robustness beyond preliminary, early stage testing. 
