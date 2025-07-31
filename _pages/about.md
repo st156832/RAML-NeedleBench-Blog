@@ -221,6 +221,8 @@ The authors further provide an Effective Needle Length (ENL) score, whereby N re
 least τ. Models are evaluated under a ENL-50 metric, with τ = 50% 
 
 ## Experiments and Results
+
+### Information Sparse Task Results  
 <figure>
     <img src="{{site.baseurl}}/images/sparse_results.png"
          alt="Information sparse tasks results, NeedleBench.">
@@ -241,10 +243,33 @@ Neddlebench echoes the results of RULER, with models achieving excellent results
 - Some small models such as IntermLM and the Gemma series overperform, suggesting model architecture to be a factor.
 - Generally, English language performance trumps Chinese with the notable outlier of Qwen-2.5-27B and Qwen-2.5-14B where the formers performance is almost identical across both languages and the latter was the only model tested, that performed better at Chinese M-RS.
 
+### Information Dense Task Results
+
 <figure>
     <img src="{{site.baseurl}}/images/atc_results.png"
          alt="Information dense tasks results, NeedleBench.">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 12: Main results of NeedleBench information dense ATC tasks.</figcaption>
 </figure>
 
+The performance fall-off for information dense ATC tasks is even smore drastic then the one obeserved with the M-RS tasks. Performance strongly decreased with increased taks complexity (needle count), with only two models reaching an EML-50 score of 64 and higher.  
 
+<figure>
+    <img src="{{site.baseurl}}/images/atc_detail.png"
+         alt="Detailed Information dense tasks results, NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 13: Detailed ATC results.</figcaption>
+</figure>
+
+**Information Dense ATC results in detail**:
+-  Increased model size seems to have a positive impact on performance, with both the GPT-4 series as well as DeepSeek showing less significant decline with increased needle count.
+-  Similar to the M-RS results, the Gemma series of models overperforms here as well compared to other models of similar parameter count at small scale ATC.
+-  DeepSeek-R1 outperforms all other models, being the only one that reached an ENL-50 of 256.
+-  In Contrast DeepSeek-R1-Qwen distillation performance is surprisingly poor.
+
+**Breakdown of Reasoning Errors in ATC**
+<figure>
+    <img src="{{site.baseurl}}/images/errors.png"
+         alt="Error breakdown of ATC results, NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 14: Error breakdown of ATC results.</figcaption>
+</figure>
+
+To further analyse the results, the authors performed a manual annotation of 10% of the identified model errors in ATC tasks. By far and away the most common error type among the better performig models was so called Under-Thinking, where the models prematurely conclude that no further inference can be made, even when clear clues remain in the context. Other error types listed in the breakdwon wehere more commonly observed among models with overall worse performance, with especially smaller models struggling with following the instructions outlined in the prompt.  
