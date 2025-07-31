@@ -11,6 +11,7 @@ redirect_from:
 <figure>
     <img src="{{site.baseurl}}/images/haystack.png"
          alt="Evolution of context window size">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">"caricature of a needle in a haystack in a machine learning server room" by Midjourney</figcaption>
 </figure>
 
 *This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. It covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
@@ -71,7 +72,7 @@ Related Work - A needle in the Haystack
 
 As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achieving flawless results for context sizes below 73k. Needles inserted at the beginnign and end of the document were also always retrieved correctly, even at the maximum of 128K tokens. Notably, there is a significant performance loss observed for needles inserted between 10-50% document depth. This was dubbed the ["lost in the middle" phenomenon](https://arxiv.org/pdf/2307.03172).
 
-***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
+***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lengths.*
 
 Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/1727018183608193393) showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall results were much spottier.
 
@@ -112,8 +113,8 @@ Like in Kamradt, RULER uses synthetic data to construct and scale their haystack
 ***NOTE**: Effective length refers to the reference value of 85.7 the Llama2-7B model achieved at 4k context length. A models effective length is the context length at which it still surpasses the reference value.*
 
 **Main Findings**:
-- As in Kamradt, passkey retrival and base NIAH achieve near perfect results for most models.
-- Model performance in advanced tasks drops at higher context lenghts
+- As in Kamradt, passkey retrieval and base NIAH achieve near perfect results for most models.
+- Model performance in advanced tasks drops at higher context lengths
 - Models effective context lengths are noticably shorter then their claimed maximum. 
 
 **Limitations**:
@@ -151,7 +152,7 @@ An interesting quirk identified by the authors was the models tendency to perfor
 
 NeedleBench
 ======
-Building on both the original NIAH test as well as previous benchmarks such as [RULER](https://arxiv.org/abs/2404.06654) and [LongBench](https://arxiv.org/abs/2308.14508), Mo Li et al. present NeedleBench as a purely synthetic alternative that aims to provide a comprehensive framework designed to assess retrieval and reasoning performance in bilingual, English / Chinese, long-context task at various context lenghts. [Needlebench](https://arxiv.org/pdf/2407.11963) has a heavy focus on assessing reasoning ability and splits its evaluation tasks into two categories, **information sparse** and **information dense** tasks. 
+Building on both the original NIAH test as well as previous benchmarks such as [RULER](https://arxiv.org/abs/2404.06654) and [LongBench](https://arxiv.org/abs/2308.14508), Mo Li et al. present NeedleBench as a purely synthetic alternative that aims to provide a comprehensive framework designed to assess retrieval and reasoning performance in bilingual, English / Chinese, long-context task at various context lengths. [Needlebench](https://arxiv.org/pdf/2407.11963) has a heavy focus on assessing reasoning ability and splits its evaluation tasks into two categories, **information sparse** and **information dense** tasks. 
 
 ## Information Sparse Tasks
 
@@ -171,7 +172,7 @@ Information sparse tasks are categorized by relevant details, the needles, being
    
 ### Evaluation of information Sparse Tasks
 
-Each tasks is evaluated on a exact match metric, where full points are awarded, if each required keyword is included in the provided answer. Individual Scores are then averaged across all varitions of content lenghts (C), needle positions (D) and task repetitions (R) with R = 10 for each configuration. The overall score for a model is calcualted by averaging the task score across all three task categories.
+Each tasks is evaluated on a exact match metric, where full points are awarded, if each required keyword is included in the provided answer. Individual Scores are then averaged across all varitions of content lengths (C), needle positions (D) and task repetitions (R) with R = 10 for each configuration. The overall score for a model is calcualted by averaging the task score across all three task categories.
 
 <figure>
     <img src="{{site.baseurl}}/images/NB_sparse_eval.png"
@@ -251,7 +252,7 @@ Neddlebench echoes the results of RULER, with models achieving excellent results
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 12: Main results of NeedleBench information dense ATC tasks.</figcaption>
 </figure>
 
-The performance fall-off for information dense ATC tasks is even smore drastic then the one obeserved with the M-RS tasks. Performance strongly decreased with increased taks complexity (needle count), with only two models reaching an EML-50 score of 64 and higher.  
+The performance fall-off for information dense ATC tasks is even more drastic then the one obeserved with the M-RS tasks. Performance strongly decreased with increased taks complexity (needle count), with only two models reaching an EML-50 score of 64 and higher.  
 
 <figure>
     <img src="{{site.baseurl}}/images/atc_detail.png"
@@ -275,7 +276,7 @@ The performance fall-off for information dense ATC tasks is even smore drastic t
 To further analyse the results, the authors performed a manual annotation of 10% of the identified model errors in ATC tasks. By far and away the most common error type among the better performig models was so called Under-Thinking, where the models prematurely conclude that no further inference can be made, even when clear clues remain in the context. Other error types listed in the breakdwon wehere more commonly observed among models with overall worse performance, with especially smaller models struggling with following the instructions outlined in the prompt.  
 
 ## Summary
-With NeedleBench Mo Li et al. present a facinating take on a synthetic and scalable reasoning and retrieval assessments framework for long context evaluation. While there are many competing long context benchmarks out there, the ATC challenge outlined in the paper presents a novel and sufficiently challenging approach to assessing a models reasoning ability in long context scenarios. Their findings highlight the general weakness of many models in this area and point out "Under-Thinking" as the main downfall of the better performing models. Their results also hint at model achitecture playing an important role in determining its reasoning ability in long context scenarios as evicenced by the performance of the Gemma series.
+With NeedleBench Mo Li et al. present a fascinating take on a synthetic and scalable reasoning and retrieval assessments framework for long context evaluation. While there are many competing long context benchmarks out there, the ATC challenge outlined in the paper presents a novel and sufficiently challenging approach to assessing a models reasoning ability in long context scenarios. Their findings highlight the general weakness of many models in this area and point out "Under-Thinking" as the main downfall of the better performing models. Their results also hint at model achitecture playing an important role in determining its reasoning ability in long context scenarios as evicenced by the performance of the Gemma series.
 
 Being almost entirely focused on assessing reasoning ability comes at the cost of more general applicability however. Alternatives such as [LongBench](https://arxiv.org/abs/2308.14508) offer much broader coverage of potential real-world tasks and may therefore be more generally applicable if reasoning is not the primary metric to be evaluated.
 
