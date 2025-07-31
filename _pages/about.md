@@ -63,10 +63,20 @@ A needle in Haystack
 4. Vary the size of the haystack and the point the needle is inserted.
 5. Evaluate the models answers on accuracy for each configuration. 
 
-The Initial testing contained evaluations at Intervals from 1-128k tokens and 0-100% insertion depth. 
-
 <figure>
     <img src="{{site.baseurl}}/images/NIAH_results.png"
          alt="Results of the initial NIAH test on ChatGPT-4">
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 2: Results of the initial NIAH test on ChatGPT-4.</figcaption>
 </figure>
+
+As can be seen in Figure 2, ChatGPT-4 generally performed well in testing, achieving flawless results for context sizes below 73k. Needles inserted at the beginnign and end of the document were also always retrieved correctly, even at the maximum of 128K tokens. Notably, there is a significant performance loss observed for needles inserted between 10-50% document depth. This was dubbed the ["lost in the middle" phenomenon](https://arxiv.org/pdf/2307.03172).
+
+Kamradts test on Claud-2.1 showed a similar pattern, with performance taking a significant hit in the outlined area, however the overall reults were much spottier.
+
+<figure>
+    <img src="{{site.baseurl}}/images/NIAH_results.png"
+         alt="Results of the initial NIAH test on Claud-2.1">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 3: Results of the initial NIAH test on Claud-2.1.</figcaption>
+</figure>
+
+These results were later [challenged by Anthropic](https://www.anthropic.com/news/claude-2-1-prompting), claiming that the models comparatively poor performance was due to non-ideal prompting and the models tendency to "not [answer] a question based on a document if it doesn’t contain enough information to justify that answer". Anthropics revised testing boosted the NIAH performance from 27% to 98% accuracy, indicating that both model architecture as well as prompt construction can have a significant impact on NIAH performance. A hypothesis that would later be re-affirmed in other bench marking results building on the original NIAH.
