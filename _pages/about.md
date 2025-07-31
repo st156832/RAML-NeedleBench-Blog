@@ -273,3 +273,19 @@ The performance fall-off for information dense ATC tasks is even smore drastic t
 </figure>
 
 To further analyse the results, the authors performed a manual annotation of 10% of the identified model errors in ATC tasks. By far and away the most common error type among the better performig models was so called Under-Thinking, where the models prematurely conclude that no further inference can be made, even when clear clues remain in the context. Other error types listed in the breakdwon wehere more commonly observed among models with overall worse performance, with especially smaller models struggling with following the instructions outlined in the prompt.  
+
+## Summary
+With NeedleBench Mo Li et al. present a facinating take on a synthetic and scalable reasoning and retrieval assessments framework for long context evaluation. While there are many competing long context benchmarks out there, the ATC challenge outlined in the paper presents a novel and sufficiently challenging approach to assessing a models reasoning ability in long context scenarios. Their findings highlight the general weakness of many models in this area and point out "Under-Thinking" as the main downfall of the better performing models. Their results also hint at model achitecture playing an important role in determining its reasoning ability in long context scenarios as evicenced by the performance of the Gemma series.
+
+Being almost entirely focused on assessing reasoning ability comes at the cost of more general applicability however. Alternatives such as LongBench offer much broader coverage of potential real-world tasks and may therefore be more generally applicable if reasoning is not the primary metric to be evaluated.
+
+## Sources
+- https://arxiv.org/pdf/2407.11963
+- https://arxiv.org/abs/2404.06654
+- https://arxiv.org/abs/2308.14508
+- https://arxiv.org/html/2411.06899v1
+- https://www.meibel.ai/post/understanding-the-impact-of-increasing-llm-context-windows
+- https://x.com/gregkamradt/status/1722386725635580292
+- https://www.anthropic.com/news/claude-2-1-prompting
+- https://towardsdatascience.com/the-needle-in-a-haystack-test-a94974c1ad38/
+- https://github.com/gkamradt/LLMTest_NeedleInAHaystack
