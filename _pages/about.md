@@ -180,7 +180,7 @@ Each tasks is evaluated on a exact match metric, where full points are awarded, 
 </figure>
 
 ## Information Dense Tasks
-While information sparse tasks bear a fairly close resemblence to the original NIAH test, information dense tasks ditch the established concept of the haystack completely in an effort to eliminate the need for irrelavant filler content. The so called ancestral trace challenge (ATC) is similar to the M-RS task, but instead of embedding multiple relational needles into a haystack, the context only consists of needles. Every sentence in the input context contains
+While information sparse tasks bear a fairly close resemblence to the original NIAH test, information dense tasks ditch the established concept of the haystack completely in an effort to eliminate the need for irrelavant filler content. The so called ancestral trace challenge (ATC) is similar to the M-RS task, but instead of embedding multiple relational needles into a haystack, the context only consists of needles, each representing a link in a familial dynamic. Every sentence in the input context contains
 critical information directly related to the target question. Models need to keep perfect recall of all needles to arrive at the correct answer. 
 
 >Example ATC Prompt with 3 needles:
@@ -207,3 +207,15 @@ critical information directly related to the target question. Models need to kee
   - Tracing the n-th descendant of a given individual
   - Calculating the relationship distance between two individuals
 - **Language diversity**: All ATC tasks are performed in English and Chinese
+
+### Evaluation of information Dense Tasks
+As with information sparse tasks, information dense tasks are evaluated on a exact match metric. To aggregate results across different levels of task difficulty, the authors compute a weighted average of the exact match accuracy, where the weight for each subtask is proportional to the number of needles (i.e. the difficulty of the task) it contains.
+
+<figure>
+    <img src="{{site.baseurl}}/images/NB_ATC_EVAL.png"
+         alt="Information dense tasks evaluation NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 8: Information dense tasks evaluation in NeedleBench.</figcaption>
+</figure>
+
+The authors further provide an Effective Needle Length (ENL) score, whereby N reflects the largest number of needles for which the model’s exact-match accuracy P<sub>N</sub> remains at
+least τ. Models are evaluated under a ENL-50 metric, with τ = 50% 
