@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Academic Pages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: "NeedleBench: Can LLMs Do Retrieval and Reasoning in Information-Dense Context?"
 author_profile: true
 date: 2025-07-31
 redirect_from: 
@@ -13,7 +13,7 @@ redirect_from:
          alt="Evolution of context window size">
 </figure>
 
-*This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. it covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
+*This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. It covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
 
 Motivation - Evolution of ultra long context models
 ======
@@ -50,7 +50,7 @@ So why are leading LLM developers chasing these ultra large context models? Toke
    While the primary focus often lays on ever increasing performance, researchers have warned about potential safety concerns when operating ultra large context models. Over fifty percent of responses from LLMs tested in the [LongSafetyBench framework](https://arxiv.org/html/2411.06899v1) contained elements the researchers deemed unsafe. Furthermore, models seem to struggle with identifying harmful content within their provided context when the total context size increases. As a result, the point towards the fact, that a models safety behavior can vary significantly between small and large context scenarios. 
 
 - **Performance**:
-   Finally, the issue of performance. While many models claim large theoretical context windows of 128k+ tokens, the question remains, whether their performance stays consistent when actually utilizing that space. The last couple of years have seen the development of various benchmarking tools and frameworks to assess whether or not these models can keep up when confronted with large context scenarios. Generally, a models acceptable performance cutoff seems to fall significantly short of its claimed maximal context size. 
+   Finally, the issue of performance. While many models claim large theoretical context windows of 128k+ tokens, the question remains, whether their performance stays consistent when actually utilizing that space. The last couple of years have seen the development of various benchmarking tools and frameworks to assess whether or not these models can keep up when confronted with large context scenarios. 
 
 Related Work - A needle in the Haystack
 ======
@@ -85,7 +85,7 @@ These results were later [challenged by Anthropic](https://www.anthropic.com/new
 
 Related Work - Long Context Benchmarking
 ======
-Following the publication of NIAH, several long-context benchmarking frameworks, including NeedleBench, have implemented variations of the original NIAH test into their suit of evaluation tasks. NeedleBench in turn, seeks to address some of the shortcomings identified in these related benchmarks. We will Therefore briefly cover two of these, RULER and LongBench, as they are emblematic of two different approaches to long-context benchmarking, identified in the paper.  
+Following the publication of NIAH, several long-context benchmarking frameworks, including [NeedleBench](https://arxiv.org/pdf/2407.11963), have implemented variations of the original NIAH test into their suit of evaluation tasks. [NeedleBench](https://arxiv.org/pdf/2407.11963) in turn, seeks to address some of the shortcomings identified in these related benchmarks. We will Therefore briefly cover two of these, [RULER](https://arxiv.org/abs/2404.06654) and [LongBench](https://arxiv.org/abs/2308.14508), as they are emblematic of two different approaches to long-context benchmarking, identified in the paper.  
 
 ## RULER
 Published by Hsieh et al. in 2024, the english language synthetic RULER benchmark builds on the original NIAH, incorporating variation on the base test, RULER further tests on variable tracking (VT), common word extraction (CWE), frequent word extraction (FWE) and question answering (QA). 
@@ -151,7 +151,7 @@ An interesting quirk identified by the authors was the models tendency to perfor
 
 NeedleBench
 ======
-Building on both the original NIAH test as well as previous benchmarks such as RULER and LongBench, Mo Li et al. present NeedleBench as a purely synthetic alternative that aims to provide a comprehensive framework designed to assess retrieval and reasoning performance in bilingual, English / Chinese, long-context task at various context lenghts. Needlebench has a heavy focus on assessing reasoning ability and splits its evaluation tasks into two categories, **information sparse** and **information dense** tasks. 
+Building on both the original NIAH test as well as previous benchmarks such as [RULER](https://arxiv.org/abs/2404.06654) and [LongBench](https://arxiv.org/abs/2308.14508), Mo Li et al. present NeedleBench as a purely synthetic alternative that aims to provide a comprehensive framework designed to assess retrieval and reasoning performance in bilingual, English / Chinese, long-context task at various context lenghts. [Needlebench](https://arxiv.org/pdf/2407.11963) has a heavy focus on assessing reasoning ability and splits its evaluation tasks into two categories, **information sparse** and **information dense** tasks. 
 
 ## Information Sparse Tasks
 
@@ -277,7 +277,7 @@ To further analyse the results, the authors performed a manual annotation of 10%
 ## Summary
 With NeedleBench Mo Li et al. present a facinating take on a synthetic and scalable reasoning and retrieval assessments framework for long context evaluation. While there are many competing long context benchmarks out there, the ATC challenge outlined in the paper presents a novel and sufficiently challenging approach to assessing a models reasoning ability in long context scenarios. Their findings highlight the general weakness of many models in this area and point out "Under-Thinking" as the main downfall of the better performing models. Their results also hint at model achitecture playing an important role in determining its reasoning ability in long context scenarios as evicenced by the performance of the Gemma series.
 
-Being almost entirely focused on assessing reasoning ability comes at the cost of more general applicability however. Alternatives such as LongBench offer much broader coverage of potential real-world tasks and may therefore be more generally applicable if reasoning is not the primary metric to be evaluated.
+Being almost entirely focused on assessing reasoning ability comes at the cost of more general applicability however. Alternatives such as [LongBench](https://arxiv.org/abs/2308.14508) offer much broader coverage of potential real-world tasks and may therefore be more generally applicable if reasoning is not the primary metric to be evaluated.
 
 ## Sources
 - https://arxiv.org/pdf/2407.11963
