@@ -15,6 +15,9 @@ redirect_from:
 
 *This article is part of the 'Recent applications of machine learning' seminar at the University of Stuttgart, Germany. it covers the general advantages and potential challenges associated with large context models, cover three different approaches to large context benchmarking and sheds some light on one of the original large context evaluation methods, the now legendary "Needle in a Haystack" test.*
 
+Some Background
+======
+
 ## Development of large context models:
 The release of Llamma 4 Scout this April marked yet another milestone in the rapid expansion of transformer LLM's capability to support larger and larger context sizes. The model claims an impressive 10M+ token context window, overshadowing even Googles Gemini series that made waves back in 2024 with the first model to break the 1M+ token boundary. Compare this to GPT1's rather modest context limit of a mere 520 tokens and the trend over the last half a decade becomes pretty clear.
 
@@ -83,3 +86,28 @@ Kamradt's [test on Claud-2.1](https://x.com/GregKamradt/status/17270181836081933
 These results were later [challenged by Anthropic](https://www.anthropic.com/news/claude-2-1-prompting), claiming that the models comparatively poor performance was due to non-ideal prompting and the models tendency to "not [answer] a question based on a document if it doesn’t contain enough information to justify that answer". Anthropics revised testing boosted the NIAH performance from 27% to 98% accuracy, indicating that both model architecture as well as prompt construction can have a significant impact on NIAH performance. A hypothesis that would later be re-affirmed in other bench marking results building on the original NIAH.
 
 ***Fun fact**: Greg Kamradt's testing on ChatGPT-4 cost roughly 200$ in API calls. A singular run at 128k tokens was billed at 1.28$, outlining one of the issues of repeatedly testing closed source models at high context lenghts.*
+
+Long Context Benchmarking
+======
+
+## RULER
+Published by Hsieh et al. in 2024, the synthetic RULER benchmark builds on the original NIAH, incorporating variation on the base test, RULER further tests on variable tracking (VT), common word extraction (CWE), frequent word extraction (FWE) and question answering (QA). 
+
+**NIAH Tasks in the RULER Benchmark**:
+-  **Single NIAH(S-NIAH)**: This is the vanilla NIAH test where a single “needle”2 needs
+    to be retrieved from the “haystack”.
+- **Multi-keys NIAH (MK-NIAH)**: Multiple “needles” are inserted into the “haystack”, and
+ only one of them needs to be retrieved. The additional “needles” are hard distractors. The
+ most challenging setting is a version where the “haystack” is filled with distractor needles.
+- **Multi-values NIAH (MV-NIAH)**: Multiple “needles” sharing the same key are inserted
+ into the “haystack”. All values associated with the same key need to be retrieved.
+- **Multi-queries NIAH (MQ-NIAH)**: Multiple “needles” are inserted into the “haystack”.
+ All “needles” with distinct keys need to be retrieved.
+
+Like Kamradt, RULER uses synthetic data to construct and scale their haystack. They tested 17 models, 2 closed source and 15 open source, with context lenghts ranging between 3-128k tokens.  
+
+<figure>
+    <img src="{{site.baseurl}}/images/RULER.png"
+         alt="RULER experimental results">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 4: Long Context performers of models in RULER</figcaption>
+</figure>
