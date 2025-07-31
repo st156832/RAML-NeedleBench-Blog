@@ -227,18 +227,24 @@ least τ. Models are evaluated under a ENL-50 metric, with τ = 50%
     <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 10: main results of NeedleBench information sparse tasks at 128K.</figcaption>
 </figure>
 
-Neddlebench echoes the results of RULER, with models achieving excellent results across both S-RT and M-RT retriaval tasks. Once reasoning becomes involved however, the M-RS scores depict a stark fall of in performance across the bord.
+Neddlebench echoes the results of RULER, with models achieving excellent results across both S-RT and M-RT retrievel tasks. Once reasoning becomes involved however, the M-RS scores depict a stark fall-off in performance across the board.
 
 <figure>
     <img src="{{site.baseurl}}/images/size_language.png"
          alt="Information sparse tasks results, NeedleBench.">
-    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 10: main results of NeedleBench information sparse tasks at 128K.</figcaption>
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 11: M-RS results by parameter count and language.</figcaption>
 </figure>
 
 **Multi-Needle Reasoning Results in detail**:
 - Performance degrades with increased needle count
 - There seems to be a general positive correlation between model size and reasoning ability in M-RS tasks, however, this does not seem universally applicable as LLaMA-3.1 only marginally improves from 8 to 70B parameters. The 8B variant even beats out its larger brother at english M-RS
 - Some small models such as IntermLM and the Gemma series overperform, suggesting model architecture to be a factor.
-- Generally, English language performance trumps Chinese with the notable outlier of Qwen-2.5-27B and Qwen-2.5-14B where the formers performance is almost identical across both languages and the latter was the only model tested, that performed batter at Chinese M-RS. 
+- Generally, English language performance trumps Chinese with the notable outlier of Qwen-2.5-27B and Qwen-2.5-14B where the formers performance is almost identical across both languages and the latter was the only model tested, that performed better at Chinese M-RS.
+
+<figure>
+    <img src="{{site.baseurl}}/images/atc_results.png"
+         alt="Information dense tasks results, NeedleBench.">
+    <figcaption style="text-align: center; max-width: 50%; display: block; margin: auto; width: 50%;">Figure 12: Main results of NeedleBench information dense ATC tasks.</figcaption>
+</figure>
 
 
